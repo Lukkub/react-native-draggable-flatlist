@@ -671,6 +671,11 @@ class DraggableFlatList<T> extends React.Component<Props<T>, State> {
     {
       nativeEvent: ({ contentOffset }: NativeScrollEvent) =>
         block([
+          cond(
+            greaterOrEq(contentOffset.y, 0),
+            [set(this.props.onScrollY, contentOffset.y)],
+            this.props.fullScrollY ? [set(this.props.onScrollY, contentOffset.y)] : set(this.props.onScrollY, 0)
+          ),
           set(
             this.scrollOffset,
             this.props.horizontal ? contentOffset.x : contentOffset.y
